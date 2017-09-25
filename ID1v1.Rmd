@@ -1,0 +1,138 @@
+---
+title: "Interim Deliverable -1"
+author: "Danielle Simms, Serena Shen, Runjie Lu and Ye Chen"
+date: "September 24, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown 
+
+####The URL for our Team GitHub repository is https://github.com/wonter123/Team-Project-for-BUS-111A.
+#1A. WHAT IS PILGIRM BANK'S DATA PROBLEM?
+### There is no data before 1999 about the use of online banking, therefore there is nothing on which to base future projection of online banking.
+
+#1B. WHAT IS THE FINAL MANAGERIAL OBJECTIVE?
+##Overall, the objective is to determine if online banking should be incorporated as part of the banking structure.
+###CONSIDER:
+####a. adding new channels will incur structural costs; would including online banking be worth it?
+####b. should people be discouraged (through fees) or encouraged (discounts/rebates) for using online banking?
+####c. are those who use online banking more likely to stay? (retention of customers)
+####d. are those who use online banking more profitable?
+####e. are those who use online channels and electronic bill pay more likely to stay?
+
+#2.DESCRIBE THE MEASUREMENT TYPES OF EACH VARIABLE.
+##a. ANNUAL PROFIT - what profit does this customer generate for the bank? (RATIO)
+##b. ONLINE USAGE - does this customer use online banking? (NOMINAL; YES/NO)
+##c. AGE BUCKET - what age is this customer? (ORDINAL)
+###Grouped By: <15, 15-24, 25-34, 35-44, 45-54, 55-65, >65
+##d. INCOME BUCKET - how much money doees this customer make/what is the income?
+###Grouped By: <$15,000, $15,000-$19,999, $20,000-$29,999, $30,000-$39,999, $40,000-$49,999, $50,000-$74,999, $75,000-$99,999, $100,000-$124,999, >$125,000
+####NOTE THAT: value jumps from increments of $10,000 to increments of $25,000 after $500,00 bracket
+##e. TENURE - how long has this customer has been using this bank? (RATIO)
+##f. GEOGRAPHIC REGION - where does this customer live?
+###District is designated by 1100, 1200, and 1300
+
+#3. CREATE A TABLE SIMILAR TO EXHIBIT 4 FROM THE PILGRIM BANK CASE A.
+##Refer to CODE 2
+
+#4. HOW DO YOU HANDLE MISSING DATA IN THIS DATASET?
+##a. decided to test the significance of the missing data to determine if the customers that have missing data should be excluded from analysis.
+##b. utilized a t-test to determine that the data is important thus must be considered in the analysis. (CODE 1)
+###NULL HYPOTHESIS: The missing data points are not significant.
+###ALTERNATE HYPOTHESIS: The missing data points are significant.
+###Given the p-value of 9.79e-11 (< 0.05), t-statstic of -6.47 (absolute value > 1.96), and the 95% confidence interval does not include 0, we can reject the null hypothesis and therefore must consider missing values within the analysis.
+##c. determined that the data needs to be replaced so that it can be useful in analysis; a pivot table should be produced to determine which paired variables appear most often together to replace the missing data, ie; if a profitablity is within the range of -60 to -50 and district 1200, the age of the customer is likely in the age bucket of 2.
+###the pivot table was not produced for this deliverable due to time constraints.
+
+#5.PROVIDE HISTOGRAMS/DENSITY PLOTS FOR KEY VARIABLES.
+##Refer to CODE 4; Histogram PROFITABILITY and DensityPlot PROFITABILITY 
+
+#6. CREATE BIVARIATE FREQUENCY DISTRIBUTIONS FOR KEY VARIABLES.
+##Refer to CODE 4; BoxPlot ONLINE USE AND PROFITABILITY and CODE 3
+
+#7. DISCUSS WHAT THE DATA PATTERNS INDICATE.
+##a. Histogram and Density Plot (CODE 4)
+###As Green had pointed out, a majority of the profitability is concentrated amongst a minority of the customers. A majority of people are either contributing minimally or have a negative profitability for the bank.
+##b. Box Plot (CODE 4)
+###The boxplot shows that those who use online banking have a slightly larger range than compared to that of those who do not use online banking. They also have fewer outliers and have a higher median, which may suggest higher profitability than compared to those who do not use online banking. This may be a sign that managers should encourage the use of profitability.
+##c. Regression (CODE 3)
+###The R-squared is 0.05887, which is closer to 0; the model explains almost none of the variability of the data around its mean. Since the tenure has the highest positive coefficient, which is 5.183, the variability of the tenure will have the greatest effects on the overall profitability. 
+```{r cars}
+###< CODE 1. CONFIDENCE INTERVERAL >
+pcData = read.csv("PilgrimCaseData.csv")
+
+listProfit = pcData$X9Profit
+mean(listProfit)
+listAge_Profit <- matrix(c(pcData$X9Age,pcData$X9Inc,pcData$X9Profit), ncol = 3)
+listAge_Profit_NoNA = listAge_Profit[!is.na(listAge_Profit[,1]),]
+listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,2]),]
+listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,1]),]
+View(listAge_Profit_NoNA)
+length(listAge_Profit_NoNA)
+mean_WNA = mean(listAge_Profit[,3])
+
+mean_NoNA = mean(listAge_Profit_NoNA[,3])
+sd_NONA = sd(listAge_Profit_NoNA[,3])
+size_NoNA = length(listAge_Profit_NoNA) / 3
+var_NoNA = var(listAge_Profit_NoNA[,3])
+
+t.test(listAge_Profit[,3],listAge_Profit_NoNA[,3],paired = FALSE)
+
+###< CODE 2. TABLE >
+pilgrim <- matrix(c("9Profit", "9Online", "9Age", "9Inc", "9Tenure", "9District", "21", "0", "not available", "6.33", "1200", "-6", "0", "6", "3", "29.50", "1200", "-49", "1", "5", "5", "26.41", "1100", "-4", "0", "not available", "not available", "2.25", "1300", "...", "...", "...", "...", "...", "...", "92", "1", "1", "6", "5.41", "1200", "124", "0", "3", "6", "17.50", "1300", "111.50", "0.12", "4.05", "5.46", "10.16", "n/a", "272.84", "0.33", "1.64", "2.35", "8.45", "n/a"), ncol = 6, byrow = TRUE)
+colnames(pilgrim) <- c("1999 Annual Profit", "1999 Online Usage", "1999 Age Bucket (1-7)", "1999 Income Bucket (1-9)", "1999 Tenure Years", "1999 Geographic Region (1100, 1200, or 1300)")
+rownames(pilgrim) <- c(" ", "1", "2", "3", "4", "...", "31,633", "31,634", "Mean", "Standard Deviation")
+pilgrim <- as.table(pilgrim)
+pilgrim
+
+###< CODE 3. REGRESSION >
+#set the working directory
+train <- read.csv("PilgrimCaseData.csv")
+
+# dimension of the data
+dim(train)
+colnames(train)
+hist(train[, 7])
+
+
+#randomly divide the dataset into two parts
+number<- c(sample(31634, 15817))
+num<- sort(number) #Sort the variables to make it easier to compare the prediction with the real graph
+train<- train[num,] #use the training set to form a linear relationship
+remain<- train[-num,] #use the remaining set to test the linear formular; the test currently does not exist
+
+# observe what data looks like
+plot(train[, 7],type='p',ylab='profit', xlab='number', col='black', main='Profit Relation')
+pairs(train[1:3000,1:7])
+
+model <- lm(formula = train$X9Profit ~ train$X9Online + train$X9Age + train$X9Inc + train$X9Tenure + train$X9District +I(train$X9Online^2) + I(train$X9Age^2) + I(train$X9Inc^2) + I(train$X9Tenure^2) + I(train$X9District^2),data = train)
+plot(model, main = "Model", which = c(1, 2))
+summary(model)
+
+###< CODE 4. HISTOGRAM, DENSITY PLOT, AND BOX PLOT >
+library(readr)
+pilgrim <- read_csv("PilgrimCaseData.csv")
+View(pilgrim)
+
+
+hist(pilgrim$`9Profit`, n=50, xlab="Profit", ylab="Frequency", main="Profitability", xlim=c(0,1500))
+
+
+plot(density(pilgrim$`9Profit`), main = "Profitability", xlab = "Profit", ylab = "Frequency")
+
+boxplot(pilgrim$`9Profit`~ pilgrim$`9Online`, xlab = "Online", ylab = "Profit", main="Online Use and Profitability")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
