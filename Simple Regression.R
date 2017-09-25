@@ -11,7 +11,8 @@ hist(train[, 7])
 number<- c(sample(31634, 15817))
 num<- sort(number) #Sort the variables to make it easier to compare the pridiction with the real graph
 train<- train[num,] #use the training set to form a linear relationship
-remain<- train[-num,] #use the remian set to test the linear formular
+remain<- train[-num,] #use the remaining set to test the linear formular
+# No test in the current version
 
 # observe what data lookes like
 plot(train[, 7],type='p',ylab='profit', xlab='number', col='black', main='Profit Relation')
