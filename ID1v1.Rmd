@@ -9,8 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown 
-
 ####The URL for our Team GitHub repository is https://github.com/wonter123/Team-Project-for-BUS-111A.
 #1A. WHAT IS PILGIRM BANK'S DATA PROBLEM?
 ### There is no data before 1999 about the use of online banking, therefore there is nothing on which to base future projection of online banking.
@@ -37,7 +35,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ###District is designated by 1100, 1200, and 1300
 
 #3. CREATE A TABLE SIMILAR TO EXHIBIT 4 FROM THE PILGRIM BANK CASE A.
-##Refer to CODE 2
+
+```{r}
+###< CODE 2. TABLE >
+library(readr)
+pilgrim <- read_csv("PilgrimCaseData.csv")
+pilgrim <- matrix(c("9Profit", "9Online", "9Age", "9Inc", "9Tenure", "9District", "21", "0", "not available", "6.33", "1200", "-6", "0", "6", "3", "29.50", "1200", "-49", "1", "5", "5", "26.41", "1100", "-4", "0", "not available", "not available", "2.25", "1300", "...", "...", "...", "...", "...", "...", "92", "1", "1", "6", "5.41", "1200", "124", "0", "3", "6", "17.50", "1300", "111.50", "0.12", "4.05", "5.46", "10.16", "n/a", "272.84", "0.33", "1.64", "2.35", "8.45", "n/a"), ncol = 6, byrow = TRUE)
+colnames(pilgrim) <- c("1999 Annual Profit", "1999 Online Usage", "1999 Age Bucket (1-7)", "1999 Income Bucket (1-9)", "1999 Tenure Years", "1999 Geographic Region (1100, 1200, or 1300)")
+rownames(pilgrim) <- c(" ", "1", "2", "3", "4", "...", "31,633", "31,634", "Mean", "Standard Deviation")
+pilgrim <- as.table(pilgrim)
+pilgrim
+```
 
 #4. HOW DO YOU HANDLE MISSING DATA IN THIS DATASET?
 ##a. decided to test the significance of the missing data to determine if the customers that have missing data should be excluded from analysis.
@@ -48,21 +56,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ##c. determined that the data needs to be replaced so that it can be useful in analysis; a pivot table should be produced to determine which paired variables appear most often together to replace the missing data, ie; if a profitablity is within the range of -60 to -50 and district 1200, the age of the customer is likely in the age bucket of 2.
 ###the pivot table was not produced for this deliverable due to time constraints.
 
-#5.PROVIDE HISTOGRAMS/DENSITY PLOTS FOR KEY VARIABLES.
-##Refer to CODE 4; Histogram PROFITABILITY and DensityPlot PROFITABILITY 
-
-#6. CREATE BIVARIATE FREQUENCY DISTRIBUTIONS FOR KEY VARIABLES.
-##Refer to CODE 4; BoxPlot ONLINE USE AND PROFITABILITY and CODE 3
-
-#7. DISCUSS WHAT THE DATA PATTERNS INDICATE.
-##a. Histogram and Density Plot (CODE 4)
-###As Green had pointed out, a majority of the profitability is concentrated amongst a minority of the customers. A majority of people are either contributing minimally or have a negative profitability for the bank.
-##b. Box Plot (CODE 4)
-###The boxplot shows that those who use online banking have a slightly larger range than compared to that of those who do not use online banking. They also have fewer outliers and have a higher median, which may suggest higher profitability than compared to those who do not use online banking. This may be a sign that managers should encourage the use of profitability.
-##c. Regression (CODE 3)
-###Independent Variables - the online usage, age, income, tenure, district
-###Dependent Variable - Profitability
-###The R-squared is 0.05887, which is closer to 0; the model explains almost none of the variability of the data around its mean. Since the tenure has the highest positive coefficient, which is 5.183, the variability of the tenure will have the greatest effects on the overall profitability. 
 ```{r cars}
 ###< CODE 1. CONFIDENCE INTERVERAL >
 pcData = read.csv("PilgrimCaseData.csv")
@@ -73,7 +66,6 @@ listAge_Profit <- matrix(c(pcData$X9Age,pcData$X9Inc,pcData$X9Profit), ncol = 3)
 listAge_Profit_NoNA = listAge_Profit[!is.na(listAge_Profit[,1]),]
 listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,2]),]
 listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,1]),]
-View(listAge_Profit_NoNA)
 length(listAge_Profit_NoNA)
 mean_WNA = mean(listAge_Profit[,3])
 
@@ -83,14 +75,15 @@ size_NoNA = length(listAge_Profit_NoNA) / 3
 var_NoNA = var(listAge_Profit_NoNA[,3])
 
 t.test(listAge_Profit[,3],listAge_Profit_NoNA[,3],paired = FALSE)
+```
 
-###< CODE 2. TABLE >
-pilgrim <- matrix(c("9Profit", "9Online", "9Age", "9Inc", "9Tenure", "9District", "21", "0", "not available", "6.33", "1200", "-6", "0", "6", "3", "29.50", "1200", "-49", "1", "5", "5", "26.41", "1100", "-4", "0", "not available", "not available", "2.25", "1300", "...", "...", "...", "...", "...", "...", "92", "1", "1", "6", "5.41", "1200", "124", "0", "3", "6", "17.50", "1300", "111.50", "0.12", "4.05", "5.46", "10.16", "n/a", "272.84", "0.33", "1.64", "2.35", "8.45", "n/a"), ncol = 6, byrow = TRUE)
-colnames(pilgrim) <- c("1999 Annual Profit", "1999 Online Usage", "1999 Age Bucket (1-7)", "1999 Income Bucket (1-9)", "1999 Tenure Years", "1999 Geographic Region (1100, 1200, or 1300)")
-rownames(pilgrim) <- c(" ", "1", "2", "3", "4", "...", "31,633", "31,634", "Mean", "Standard Deviation")
-pilgrim <- as.table(pilgrim)
-pilgrim
+#5.PROVIDE HISTOGRAMS/DENSITY PLOTS FOR KEY VARIABLES.
+##Refer to CODE 4; Histogram PROFITABILITY and DensityPlot PROFITABILITY 
 
+#6. CREATE BIVARIATE FREQUENCY DISTRIBUTIONS FOR KEY VARIABLES.
+##Refer to CODE 4; BoxPlot ONLINE USE AND PROFITABILITY and CODE 3
+
+```{r}
 ###< CODE 3. REGRESSION >
 #set the working directory
 train <- read.csv("PilgrimCaseData.csv")
@@ -98,8 +91,6 @@ train <- read.csv("PilgrimCaseData.csv")
 # dimension of the data
 dim(train)
 colnames(train)
-hist(train[, 7])
-
 
 #randomly divide the dataset into two parts
 number<- c(sample(31634, 15817))
@@ -108,18 +99,30 @@ train<- train[num,] #use the training set to form a linear relationship
 remain<- train[-num,] #use the remaining set to test the linear formular; the test currently does not exist
 
 # observe what data looks like
-plot(train[, 7],type='p',ylab='profit', xlab='number', col='black', main='Profit Relation')
+#plot(train[, 7],type='p',ylab='profit', xlab='number', col='black', main='Profit Relation')
 pairs(train[1:3000,1:7])
 
 model <- lm(formula = train$X9Profit ~ train$X9Online + train$X9Age + train$X9Inc + train$X9Tenure + train$X9District +I(train$X9Online^2) + I(train$X9Age^2) + I(train$X9Inc^2) + I(train$X9Tenure^2) + I(train$X9District^2),data = train)
 plot(model, main = "Model", which = c(1, 2))
 summary(model)
+```
 
+#7. DISCUSS WHAT THE DATA PATTERNS INDICATE.
+##a. Histogram and Density Plot (CODE 4)
+###As Green had pointed out, a majority of the profitability is concentrated amongst a minority of the customers. A majority of people are either contributing minimally or have a negative profitability for the bank.
+##b. Box Plot (CODE 4)
+###The boxplot shows that those who use online banking have a slightly larger range than compared to that of those who do not use online banking. They also have fewer outliers and have a higher median, which may suggest higher profitability than compared to those who do not use online banking. This may be a sign that managers should encourage the use of profitability.
+##c. Regression (CODE 3)
+###Independent Variables - the online usage, age, income, tenure, district
+###Dependent Variable - Profitability
+###The R-squared is 0.05887, which is closer to 0; the model explains almost none of the variability of the data around its mean. Since the tenure has the highest positive coefficient, which is 5.183, the variability of the tenure will have the greatest effects on the overall profitability. 
+
+
+## Including Plots
+
+```{r pressure, echo=TRUE}
 ###< CODE 4. HISTOGRAM, DENSITY PLOT, AND BOX PLOT >
-library(readr)
 pilgrim <- read_csv("PilgrimCaseData.csv")
-View(pilgrim)
-
 
 hist(pilgrim$`9Profit`, n=50, xlab="Profit", ylab="Frequency", main="Profitability", xlim=c(0,1500))
 
@@ -129,12 +132,3 @@ plot(density(pilgrim$`9Profit`), main = "Profitability", xlab = "Profit", ylab =
 boxplot(pilgrim$`9Profit`~ pilgrim$`9Online`, xlab = "Online", ylab = "Profit", main="Online Use and Profitability")
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
