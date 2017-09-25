@@ -37,9 +37,37 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #4. HOW DO YOU HANDLE MISSING DATA IN THIS DATASET?
 ##a. decided to test the significance of the missing data to determine if the customers that have missing data should be excluded from analysis.
-##b. utilized a t-test to determine that the data is important thus must be considered in the analysis. 
+##b. utilized a t-test to determine that the data is important thus must be considered in the analysis. (CODE 1)
+###NULL HYPOTHESIS: The missing data points are not significant.
+###ALTERNATE HYPOTHESIS: The missing data points are significant.
+###Given the p-value of 9.79e-11 (< 0.05), t-statstic of -6.47 (absolute value > 1.96), and the 95% confidence interval does not include 0, we can reject the null hypothesis and therefore must consider missing values within the analysis.
+##c. determined that the data needs to be replaced so that it can be useful in analysis; a pivot table should be produced to determine which paired variables appear most often together to replace the missing data, ie; if a profitablity is within the range of -60 to -50 and district 1200, the age of the customer is likely in the age bucket of 2.
+###the pivot table was not produced for this deliverable due to time constraints.
 ```{r cars}
-summary(cars)
+###< CODE 1. CONFIDENCE INTERVERAL >
+pcData = read.csv("PilgrimCaseData.csv")
+####pcData[!complete.cases(pcData),]
+#####listAge = pcData$X9Age
+#####listAge <- listAge[!is.na(listAge)]viewmean
+listProfit = pcData$X9Profit
+mean(listProfit)
+listAge_Profit <- matrix(c(pcData$X9Age,pcData$X9Inc,pcData$X9Profit), ncol = 3)
+listAge_Profit_NoNA = listAge_Profit[!is.na(listAge_Profit[,1]),]
+listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,2]),]
+listAge_Profit_NoNA = listAge_Profit_NoNA[!is.na(listAge_Profit_NoNA[,1]),]
+###temp = listAge_Profit_NoNA[,2]
+View(listAge_Profit_NoNA)
+length(listAge_Profit_NoNA)
+mean_WNA = mean(listAge_Profit[,3])
+
+mean_NoNA = mean(listAge_Profit_NoNA[,3])
+sd_NONA = sd(listAge_Profit_NoNA[,3])
+size_NoNA = length(listAge_Profit_NoNA) / 3
+var_NoNA = var(listAge_Profit_NoNA[,3])
+####error_NoNA <- qt(0.975,df=size_NoNA-1)*sd_NONA/sqrt(size_NoNA)
+
+#### t = (mean_NoNA - mean_WNA) / (sd_NONA/sqrt(size_NoNA))
+t.test(listAge_Profit[,3],listAge_Profit_NoNA[,3],paired = FALSE)
 ```
 
 ## Including Plots
@@ -47,7 +75,7 @@ summary(cars)
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
