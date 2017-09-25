@@ -60,6 +60,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ##b. Box Plot (CODE 4)
 ###The boxplot shows that those who use online banking have a slightly larger range than compared to that of those who do not use online banking. They also have fewer outliers and have a higher median, which may suggest higher profitability than compared to those who do not use online banking. This may be a sign that managers should encourage the use of profitability.
 ##c. Regression (CODE 3)
+###Independent Variables - the online usage, age, income, tenure, district
+###Dependent Variable - Profitability
 ###The R-squared is 0.05887, which is closer to 0; the model explains almost none of the variability of the data around its mean. Since the tenure has the highest positive coefficient, which is 5.183, the variability of the tenure will have the greatest effects on the overall profitability. 
 ```{r cars}
 ###< CODE 1. CONFIDENCE INTERVERAL >
