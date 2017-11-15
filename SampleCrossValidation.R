@@ -39,3 +39,45 @@ error <- p - test[["price"]]
 
 # Calculate RMSE
 sqrt(mean(error^2))
+
+# Fit lm model using 10-fold CV: model
+model <- train(
+  price ~ ., diamonds,
+  method = "lm",
+  trControl = trainControl(
+    method = "cv", number = 10,
+    verboseIter = TRUE
+  )
+)
+
+# Print model to console
+model
+
+# Fit lm model using 5-fold CV: model
+model <- train(
+  medv ~ ., Boston,
+  method = "lm",
+  trControl = trainControl(
+    method = "cv", number = 5,
+    verboseIter = TRUE
+  )
+)
+
+# Print model to console
+model
+
+# Fit lm model using 5 x 5-fold CV: model
+model <- train(
+  medv ~ ., Boston,
+  method = "lm",
+  trControl = trainControl(
+    method = "cv", number = 5,
+    repeats = 5, verboseIter = TRUE
+  )
+)
+
+# Print model to console
+model
+
+# Predict on full Boston dataset
+predict(model, Boston)
