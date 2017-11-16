@@ -12,81 +12,90 @@ AIC(modelOnline9)
 
 model2 <- lm(X9Profit~factor(X9Online)+factor(X9Age),data = pData)
 summary(model2)
-## Adjusted R-squared = 0.02464
+## R-squared = 0.02407
+## Adjusted R-squared = 0.02385
 BIC(model2)
-## BIC = 329074.9
+## BIC = 443957.9
 AIC(model2)
-## AIC = 329002.4
+## AIC = 443882.6
 
-model3 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc,data = pData)
+model3 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc),data = pData)
 summary(model3)
-## Adjusted R-squared = 0.04603
+## R-squared = 0.04776
+## Adjusted R-squared = 0.04731
 BIC(model3)
-## BIC = 321298.7
+## BIC = 443263.3
 AIC(model3)
-## AIC = 321218.3
+## AIC = 443121.2
 
-model4 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc+X9Tenure,data = pData)
+model4 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure,data = pData)
 summary(model4)
-## Adjusted R-squared = 0.05838
+## R-squared = 0.06622
+## Adjusted R-squared = 0.06575
 BIC(model4)
-## BIC = 321010.4
+## BIC = 442654.4
 AIC(model4)
-## AIC = 320922
+## AIC = 442503.9
 
-model5 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc+X9Tenure+factor(X9District),data = pData)
+model5 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure+factor(X9District),data = pData)
 summary(model5)
-##Adjusted R-squared = 0.05893
+## R-squared = 0.06682
+## Adjusted R-squared = 0.06629
 BIC(model5)
-## BIC = 321015.1
+## BIC = 442654.7
 AIC(model5)
-## AIC = 320910.6
+## AIC = 442487.5
 
 ## Interaction between 9Age and 9Income --> to show that perhaps nonlinear relationship is better fit of data
-model6 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc+X9Tenure+factor(X9District)+factor(X9Billpay)+(factor(X9Age)*X9Inc),data = pData)
+model6 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay)+(factor(X9Age)*factor(X9Inc)),data = pData)
 summary(model6)
-## Adjusted R-squared = 0.06343
+## R-squared = 0.07126
+## Adjusted R-squared = 0.06929
 BIC(model6)
-## BIC = 320969.1
+## BIC = 443011.7
 AIC(model6)
-## AIC = 320808.4
+## AIC = 442434.7
 
 ## Interaction between 9Inc and 9District --> to show that perhaps nonlinear relationship is better fit of data
-model7 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc+X9Tenure+factor(X9District)+factor(X9Billpay)+(X9Inc*X9District),data = pData)
+model7 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay)+(factor(X9Inc)*X9District),data = pData)
 summary(model7)
-## Adjusted R-squared = 0.06031
+## R-squared = 0.0683
+## Adjusted R-squared = 0.0675
 BIC(model7)
-## BIC = 320999.8
+## BIC = 442697
 AIC(model7)
-## AIC = 320879.2
+## AIC = 442455.3
 
-## linear-log model --> to show that perhaps nonlinear relationship is better fit of data
-model8 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+log(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
+## log-linear model --> to show that perhaps nonlinear relationship is better fit of data
+model8 <- lm(log(X9Profit)~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
 summary(model8)
-## Adjusted R-squared = 0.05383
+## R-squared = 0.05616
+## Adjusted R-squared = 0.0558
 BIC(model8)
-## BIC = 321147.5
+## BIC = 442952
 AIC(model8)
-## AIC = 321035
+## AIC = 442835
 
-## quadratic --> to show that perhaps nonlinear relationship is better fit of data
+## polynomial (quadratic) --> to show that perhaps nonlinear relationship is better fit of data
 X9Age_2 <- pData$X9Age*pData$X9Age
-model9_2 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Age_2)+X9Inc+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
+model9_2 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Age_2)+factor(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
 summary(model9_2)
-## Adjusted R-squared = 0.0602
+## R-squared = 0.06798
+## Adjusted R-squared = 0.06742
 BIC(model9_2)
-## BIC = 320993.4
+## BIC = 442625.8
 AIC(model9_2)
-## AIC = 320881
+## AIC = 442450.2
 
 
-model9 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+X9Inc+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
+model9 <- lm(X9Profit~factor(X9Online)+factor(X9Age)+factor(X9Inc)+X9Tenure+factor(X9District)+factor(X9Billpay),data = pData)
 summary(model9)
-## Adjusted R-squared = 0.0602
+## R-squared = 0.06798
+## Adjusted R-squared = 0.06742
 BIC(model9)
-## BIC = 320993.4
+## BIC = 442625.8
 AIC(model9)
-## AIC = 320881
+## AIC = 442450.2
 
 
 
