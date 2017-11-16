@@ -1,4 +1,3 @@
-pData = read.csv("PilgrimCaseData.csv")
 
 pData_withOnline9 = pData[pData$X9Online==1,]
 pData_withoutOnline9 = pData[pData$X9Online==0,]
