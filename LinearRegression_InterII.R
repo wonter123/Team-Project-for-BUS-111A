@@ -1,4 +1,3 @@
-pData = read.csv("PilgrimCaseData.csv")
 
 modelOnline9 <- lm(pData$X9Profit~factor(pData$X9Online))
 summary(modelOnline9)
