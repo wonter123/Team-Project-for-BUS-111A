@@ -26,7 +26,12 @@ t.test(listAge_Profit[,3],listAge_Profit_NoNA[,3],paired = FALSE)
 #t test whether handling missing data with mode affect the result
 t.test(listAge_Profit[,3],pData$X9Profit,paired = FALSE)
 
-#Before
+#Before 1999
 median(listAge_Profit_NoNA[,3])
-#After
+#After 1999
 median(pData$X9Profit)
+
+#Before 2000
+median(pcData$X0Profit,na.rm = TRUE)
+#After 2000
+median(pData$X0Profit)
