@@ -26,8 +26,6 @@ eliminateNullFactor <- function(x) {
   return(x)
 }
 
-pcData = read.csv("PilgrimCaseData.csv")
-
 
 pData$X9Profit = eliminateNull(pcData$X9Profit)
 pData$X9Age = eliminateNullFactor(pcData$X9Age)
