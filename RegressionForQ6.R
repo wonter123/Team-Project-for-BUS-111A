@@ -8,8 +8,40 @@ getData <- function(x,y) {
   print(AIC(x))
 }
 
-model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc),data = pData)
+model10<-lm(X9Profit~factor(X9Online),data = pData)
 getData(model10,1)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc),data = pData)
+getData(model10,2)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure,data = pData)
+getData(model10,3)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+factor(X9Age),data = pData)
+getData(model10,4)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+factor(X9Age)+factor(X9Billpay),data = pData)
+getData(model10,5)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+factor(X9Age)+factor(X9Billpay)+factor(X9District),data = pData)
+getData(model10,6)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+factor(X9Inc*X9Inc)+X9Tenure+factor(X9Age)+factor(X9Billpay)+factor(X9District),data = pData)
+getData(model10,7)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+X9Tenure*X9Tenure+factor(X9Age)+factor(X9Billpay)+factor(X9District),data = pData)
+getData(model10,8)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+X9Tenure*X9Tenure+factor(X9Age)+factor(X9Billpay),data = pData)
+getData(model10,9)
+
+model10<-lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+X9Tenure*X9Tenure+factor(X9District)+factor(X9Billpay)+factor(X9Age),data = pData)
+getData(model10,10)
+
+
+
+
+
 
 model10<-lm(X9Profit~factor(X9Online)+factor(X9Age),data = pData)
 getData(model10,2)
