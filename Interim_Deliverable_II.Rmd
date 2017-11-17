@@ -108,3 +108,23 @@ pData_withoutEbilling0 = pData[pData$X0Billpay == 0,]
 t.test(pData_withEbilling0$X0Profit,pData_withoutEbilling0$X0Profit,paired = FALSE)
 ```
 
+```{r retentionCreate}
+getRetention <- function(x,y) {
+  z = c(1:length(x))
+  for (i in 1: length(x)) {
+    if (!is.na(x[i]) && !is.na(y[i])) {
+      if (x[i] == 1 && y[i] == 1) {
+        z[i] = 1
+      } else {
+        z[i] = 0
+      }
+    } else {
+      z[i] = NA
+    }
+  }
+  return (z)
+}
+
+pData$Retention = getRetention(pcData$X9Online,pcData$X0Online)
+```
+
