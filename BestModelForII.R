@@ -53,3 +53,26 @@ error3 <- pred3 - test$X9Profit
 # Calculate RMSE
 sqrt(mean(error3^2))
 
+#Predict the 2000
+modelBest <- lm(X9Profit~factor(X9Online)+factor(X9Inc)+X9Tenure+factor(X9Age)+factor(X9Billpay)+factor(X9District),data = pData)
+ID = pData$ID
+X0Profit = pData$X0Profit
+X9Online = pData$X9Online
+X9Inc = pData$X9Inc
+X9Tenure = pData$X9Tenure
+X9Age = pData$X9Age
+X9Billpay = pData$X9Billpay
+X9District = pData$X9District
+Data2000 = data.frame(ID,X0Profit,X9Online,X9Inc,X9Tenure,X9Age,X9Billpay,X9District)
+
+p <-predict(modelBest,Data2000)
+
+getChange <- function(x,y) {
+  z = c(1:length(x))
+  for (i in 1: length(x)) {
+    z[i] = y[i] - x[i]
+  }
+  return(z)
+}
+#mean(p/t(pData$X0Profit))
+mean(getChange(p,pData$X0Profit))
