@@ -1,14 +1,10 @@
 getRetention <- function(x,y) {
   z = c(1:length(x))
   for (i in 1: length(x)) {
-    if (!is.na(x[i]) && !is.na(y[i])) {
-      if (x[i] == 1 && y[i] == 1) {
-        z[i] = 1
-      } else {
-        z[i] = 0
-      }
+    if (!is.na(y[i])) {
+      z[i] = 1
     } else {
-      z[i] = NA
+      z[i] = 0
     }
   }
   return (z)
