@@ -56,8 +56,29 @@ X9District = pData$X9District
 X9Billpay = pData$X9Billpay
 Data2000 = data.frame(ID,X0Profit,X9Online,X9Age,X9Inc,X9Tenure,X9District,X9Billpay,X9Age*X9Inc)
 
+Data2000 = Data2000[pData$Retention == 1,]
+
 p <-predict(modelBest,Data2000)
 
+summary(p)
+err <- p - Data2000$X0Profit
+
+sqrt(mean(err[!is.na(err)]^2))
+
 t.test(p,pData$X0Profit,paired=FALSE)
+
+conf.level = 0.95
+alpha = 1 - conf.level
+cutoff = 1 - alpha/2
+zscore = qnorm(cutoff)
+
+p.se = sd(p)/sqrt(length(p))
+  
+lower.limit = mean(p) - qnorm(0.975)*p.se
+lower.limit
+upper.limit = mean(p) + qnorm(0.975)*p.se
+upper.limit
+
+
 
 
